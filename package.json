@@ -1,0 +1,115 @@
+{
+  "name": "@andrewstart/pixi-free-sound",
+  "version": "4.0.6",
+  "description": "WebAudio API playback library with filters",
+  "main": "dist/sound.cjs.js",
+  "module": "dist/sound.esm.js",
+  "types": "dist/sound.d.ts",
+  "scripts": {
+    "test": "floss -p test --require ts-node/register -- --autoplay-policy=no-user-gesture-required",
+    "coverage": "nyc floss -p test --require ts-node/register -- --autoplay-policy=no-user-gesture-required",
+    "clean": "rimraf dist/**",
+    "start": "run-s watch",
+    "watch": "rollup -c  config/rollup.js --environment DEV --watch",
+    "lint": "eslint --ext .js --ext .ts test src --ignore-path .gitignore",
+    "lint:fix": "npm run lint -- --fix",
+    "types": "tsc -p tsconfig.json --noEmit",
+    "prebuild": "run-s clean lint types",
+    "build": "rollup -c config/rollup.js",
+    "postbuild": "run-s build:types bundle:types",
+    "build:prod": "cross-env NODE_ENV=production run-s build",
+    "prebuild:types": "rimraf .types_output/**",
+    "build:types": "tsc --declaration --emitDeclarationOnly --skipLibCheck --outDir .types_output",
+    "bundle:types": "api-extractor run --local",
+    "predocs": "rimraf docs/**",
+    "docs": "webdoc -c config/webdoc.json -r README.md",
+    "predeploy": "run-s docs",
+    "predeploy:ci": "rimraf deploy/**",
+    "deploy:ci": "mkdirp deploy && copyfiles \"{dist,examples,docs,coverage}/**\" deploy && copyfiles -f dist/pixi-sound.js* deploy",
+    "deploy": "gh-pages -d . -s \"{dist,examples,docs}/**\"",
+    "publish:patch": "npm version patch && run-s publish:skip",
+    "publish:minor": "npm version minor && run-s publish:skip",
+    "publish:major": "npm version major && run-s publish:skip",
+    "publish:skip": "run-s build:prod test && npm publish",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore"
+  },
+  "engines": {
+    "node": ">=12",
+    "yarn": "please-use-npm",
+    "npm": ">=7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixijs/sound.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/",
+    "sound.d.ts"
+  ],
+  "keywords": [
+    "webaudio",
+    "sound"
+  ],
+  "author": "Matt Karl @bigtimebuddy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pixijs/sound/issues"
+  },
+  "homepage": "https://github.com/pixijs/sound#readme",
+  "pre-commit": [
+    "lint",
+    "types"
+  ],
+  "clean-package": {
+    "indent": 2,
+    "remove": [
+      "clean-package",
+      "scripts",
+      "engines",
+      "pre-commit",
+      "devDependencies",
+      "eslintConfig"
+    ]
+  },
+  "devDependencies": {
+    "@microsoft/api-extractor": "^7.13.3",
+    "@pixi/eslint-config": "^2.0.1",
+    "@pixi/webdoc-template": "^1.2.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@types/chai": "^4.2.16",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^12.0.0",
+    "@webdoc/cli": "^1.2.0",
+    "chai": "^4.2.0",
+    "clean-package": "^1.0.1",
+    "copyfiles": "^2.1.0",
+    "cross-env": "^5.2.0",
+    "electron": "^12.0.0",
+    "eslint": "^7.23.0",
+    "floss": "^5.0.0",
+    "gh-pages": "^2.0.1",
+    "http-server": "^0.11.1",
+    "jsdoc": "^3.6.1",
+    "mkdirp": "^0.5.1",
+    "npm-run-all": "^4.1.5",
+    "nyc": "^14.1.0",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.3",
+    "rollup": "^2.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "tiny-emitter": "^2.1.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@pixi/eslint-config"
+    ]
+  }
+}
