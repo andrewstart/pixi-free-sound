@@ -6,7 +6,7 @@ export class EventEmitter extends TinyEmitter
      * Internal callback storage by event as used by tiny-emitter
      */
     // eslint-disable-next-line @typescript-eslint/ban-types
-    protected e: {[name:string]: {fn: Function, ctx: any}[]};
+    protected e: {[name:string]: {fn: (...args: any[]) => void, ctx: any}[]};
 
     public removeAllListeners(): void
     {
@@ -14,7 +14,7 @@ export class EventEmitter extends TinyEmitter
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-types,@typescript-eslint/explicit-module-boundary-types
-    public off(name: string, callback: Function, ctx?: any): this
+    public off(name: string, callback?: (...args: any[]) => void, ctx?: any): this
     {
         const e = this.e || (this.e = {});
         const evts = e[name];
