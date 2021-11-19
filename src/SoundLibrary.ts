@@ -45,6 +45,7 @@ class SoundLibrary
         if (this.supported)
         {
             this._webAudioContext = new WebAudioContext();
+            this._context = this._webAudioContext;
         }
         this._sounds = {};
 

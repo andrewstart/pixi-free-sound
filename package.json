@@ -1,6 +1,6 @@
 {
   "name": "@andrewstart/pixi-free-sound",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "WebAudio API playback library with filters",
   "main": "dist/sound.cjs.js",
   "module": "dist/sound.esm.js",
