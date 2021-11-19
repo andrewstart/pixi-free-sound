@@ -1,6 +1,6 @@
 import { shared } from '../utils/Ticker';
 import { EventEmitter } from '../utils/EventEmitter';
-import { IMediaInstance } from '../interfaces';
+import { IMediaInstance, IMedia } from '../interfaces';
 import { PlayOptions } from '../Sound';
 import { WebAudioMedia } from './WebAudioMedia';
 import { WebAudioUtils } from './WebAudioUtils';
@@ -476,11 +476,11 @@ class WebAudioInstance extends EventEmitter implements IMediaInstance
     }
 
     /** Initializes the instance. */
-    public init(media: WebAudioMedia): void
+    public init(media: IMedia): void
     {
-        this._media = media;
-        media.context.events.on('refresh', this.refresh, this);
-        media.context.events.on('refreshPaused', this.refreshPaused, this);
+        this._media = media as WebAudioMedia;
+        this._media.context.events.on('refresh', this.refresh, this);
+        this._media.context.events.on('refreshPaused', this.refreshPaused, this);
     }
 
     /** Stops the instance. */

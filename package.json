@@ -1,6 +1,6 @@
 {
   "name": "@andrewstart/pixi-free-sound",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "WebAudio API playback library with filters",
   "main": "dist/sound.cjs.js",
   "module": "dist/sound.esm.js",
@@ -102,7 +102,7 @@
     "rollup": "^2.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "ts-node": "^9.1.1",
-    "typescript": "^4.0.0"
+    "typescript": "^4.4.4"
   },
   "dependencies": {
     "tiny-emitter": "^2.1.0"
