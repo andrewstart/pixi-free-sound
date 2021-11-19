@@ -31,17 +31,18 @@ class Ticker
     {
         if (!this._frameCancel)
         {
-            this._frameCancel = requestAnimationFrame(this.update.bind(this));
+            this._frameCancel = requestAnimationFrame(this.update);
         }
     }
 
-    private update(): void
+    private update = () =>
     {
+        this._frameCancel = requestAnimationFrame(this.update);
         for (let i = this._callbacks.length - 1; i >= 0; --i)
         {
             this._callbacks[i].f.call(this._callbacks[i].ctx);
         }
-    }
+    };
 
     public stop(): void
     {
